@@ -1,20 +1,20 @@
 #!/usr/local/bin/python3
 
 import pytest
-from main import populate_game_questions, get_welcome_response, build_response
+from main import populate_game_questions, get_welcome_response, build_response, handle_answer_request
+from lib import GAME_LENGTH, SKILL_NAME, QUESTIONS
 
+# GAME_LENGTH = 5
+# SKILL_NAME = "College Nicknames"
 
-GAME_LENGTH = 5
-SKILL_NAME = "College Nicknames"
-
-QUESTIONS = [
-    {"What is the nickname for University of Washington?": ["Huskies"]},
-    {"What is the nickname for Abilene Christian University?": ["Wildcats"]},
-    {"What is the nickname for Adams State?": ["Grizzlies"]},
-    {"What is the nickname for Adelphi": ["Panthers"]},
-    {"What is the nickname for Adrian College?": ["Bulldogs"]},
-    {"What is the nickname for Air Force?": ["Falcons"]},
-]
+#QUESTIONS = [
+#    {"What is the nickname for University of Washington?": ["Huskies"]},
+#    {"What is the nickname for Abilene Christian University?": ["Wildcats"]},
+#    {"What is the nickname for Adams State?": ["Grizzlies"]},
+#    {"What is the nickname for Adelphi": ["Panthers"]},
+#    {"What is the nickname for Adrian College?": ["Bulldogs"]},
+#    {"What is the nickname for Air Force?": ["Falcons"]},
+#]
 
 sample_event = {
   'session': {
@@ -47,14 +47,19 @@ sample_event = {
 }
 
 sample_intent = {
-    'name': "GetTrainTimes",
-    'slots': { 
-        'Station': {
-            'name': "Station",
-            'value': "Balboa Park"
+    'name': 'AnswerOnlyIntent',
+    'slots': {
+        'Answer': {
+            'name': 'Answer',
+            'value': 'Indians',
+            'confirmationStatus': 'NONE'
         }
-    }
+    },
+     'confirmationStatus': 'NONE'
 }
+
+sample_session = {u'new': False, u'sessionId': u'amzn1.echo-api.session.21d3ade4-ff06-4cb0-bc0e-4966855237e0', u'attributes': {u'reprompt_text': u'What is the nickname for Pace University?', u'current_questions_index': 3, u'score': 0, u'questions': [602, 160, 389, 653, 118], u'correct_answers': [u'Setters'], u'speech_output': u'That answer is wrong. The correct answer is Blue BoysYour score is 0. What is the nickname for Pace University?'}, u'user': {u'userId': u'amzn1.ask.account.AF6XZLNHASKGV256WJFA3OQVJO57Y5YJNJ6K2NP5QTB5ERQBYWCPONSS3UFS2EYY2SFAUTEO7JBBUXSRAR2WRKUAIQNDE7VGEQATLMCVSMGRMVEVNS7EKGI3CQVWNVRQJACHVUUXZY2TGYVPWKTS6552PLDLQF6KIHKWCVUIWM2TD5XN62ULBO4NYLWVUWD5CM6JVPD2HLZQ6TI'}, u'application': {u'applicationId': u'amzn1.ask.skill.7b01b357-de3c-452c-8c9f-9bffec202c91'}}
+
 
 def test_build_response():
     sessionAttr={'speech_output': "Let's play College Nicknames. I will ask you 5 questions. Try to get as many right as you can. Just say the answer. Let's begin. What is the nickname for Adelphi",
@@ -95,7 +100,7 @@ def test_populate_game_questions():
     assert len(gq) == GAME_LENGTH
 
     for i in gq:
-        assert i in (0, 1, 2, 3, 4, 5)
+        assert i in range(len(QUESTIONS))
 
     #print (gq)
     #assert false
@@ -119,18 +124,21 @@ def test_get_welcome_response():
     assert question in sessionAttr['speech_output']
     assert question in sessionAttr['reprompt_text']
 
-    if question is "What is the nickname for University of Washington?":
-        assert "Huskies" in sessionAttr['correct_answer']
-    if question is "What is the nickname for Abilene Christian University?": 
-        assert "Wildcats" in sessionAttr['correct_answer']
-    if question is "What is the nickname for Adams State?":
-        assert "Grizzlies" in sessionAttr['correct_answer']
-    if question is "What is the nickname for Adelphi":
-        assert "Panthers" in sessionAttr['correct_answer']
-    if question is "What is the nickname for Adrian College?":
-        assert "Bulldogs" in sessionAttr['correct_answer']
-    if question is "What is the nickname for Air Force?":
-        assert "Falcons" in sessionAttr['correct_answer']
+    # if question is "What is the nickname for University of Washington?":
+    #     assert "Huskies" in sessionAttr['correct_answers']
+    # if question is "What is the nickname for Abilene Christian University?": 
+    #     assert "Wildcats" in sessionAttr['correct_answers']
+    # if question is "What is the nickname for Adams State?":
+    #     assert "Grizzlies" in sessionAttr['correct_answers']
+    # if question is "What is the nickname for Adelphi":
+    #     assert "Panthers" in sessionAttr['correct_answers']
+    # if question is "What is the nickname for Adrian College?":
+    #     assert "Bulldogs" in sessionAttr['correct_answers']
+    # if question is "What is the nickname for Air Force?":
+    #     assert "Falcons" in sessionAttr['correct_answers']
+ 
+    # Verify the answer is correct
+    assert QUESTIONS[index][question] is sessionAttr['correct_answers']
 
     responseAttr = welcome_response['response']
     begin_statement_test(responseAttr['outputSpeech']['text'])
@@ -147,6 +155,8 @@ def test_get_welcome_response():
     assert responseAttr['shouldEndSession'] is False
 
 def test_handle_answer_request():
+    test_intent = ""
+    test_session = ""
 
- 
+    answer_req = handle_answer_request (test_intent, test_session)
     assert false
