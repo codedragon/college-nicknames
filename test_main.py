@@ -17,33 +17,33 @@ from lib import GAME_LENGTH, SKILL_NAME, QUESTIONS
 #]
 
 sample_event = {
-  'session': {
-    'sessionId': "SessionId.6ab325dd-xxxx-xxxx-aee5-456cd330932a",
-    'application': {
-      'applicationId': "amzn1.echo-sdk-ams.app.bd304b90-xxxx-xxxx-86ae-1e4fd4772bab"
-    },
+    'session': {
+        'sessionId': "SessionId.6ab325dd-xxxx-xxxx-aee5-456cd330932a",
+        'application': {
+            'applicationId': "amzn1.echo-sdk-ams.app.bd304b90-xxxx-xxxx-86ae-1e4fd4772bab"
+        },
     'attributes': {},
     'user"': {
-      "userId": "amzn1.ask.account.XXXXXX"
-    },
+        "userId": "amzn1.ask.account.XXXXXX"
+        },
     'new': "true"
-  },
-  'request': {
-    'type': "IntentRequest",
-    'requestId': "EdwRequestId.b851ed18-2ca8-xxxx-xxxx-cca3f2b521e4",
-    'timestamp': "2016-07-05T15:27:34Z",
-    'intent': {
-      'name': "GetTrainTimes",
-      'slots': {
-        'Station': {
-          'name': "Station",
-          'value': "Balboa Park"
-        }
-      }
     },
-    'locale': "en-US"
-  },
-  'version': "1.0"
+    'request': {
+        'type': "IntentRequest",
+        'requestId': "EdwRequestId.b851ed18-2ca8-xxxx-xxxx-cca3f2b521e4",
+        'timestamp': "2016-07-05T15:27:34Z",
+        'intent': {
+            'name': "GetTrainTimes",
+            'slots': {
+                'Station': {
+                    'name': "Station",
+                    'value': "Balboa Park"
+                }
+            }
+        },
+        'locale': "en-US"
+    },
+    'version': "1.0"
 }
 
 sample_intent = {
@@ -55,14 +55,33 @@ sample_intent = {
             'confirmationStatus': 'NONE'
         }
     },
-     'confirmationStatus': 'NONE'
+    'confirmationStatus': 'NONE'
 }
 
-sample_session = {u'new': False, u'sessionId': u'amzn1.echo-api.session.21d3ade4-ff06-4cb0-bc0e-4966855237e0', u'attributes': {u'reprompt_text': u'What is the nickname for Pace University?', u'current_questions_index': 3, u'score': 0, u'questions': [602, 160, 389, 653, 118], u'correct_answers': [u'Setters'], u'speech_output': u'That answer is wrong. The correct answer is Blue BoysYour score is 0. What is the nickname for Pace University?'}, u'user': {u'userId': u'amzn1.ask.account.AF6XZLNHASKGV256WJFA3OQVJO57Y5YJNJ6K2NP5QTB5ERQBYWCPONSS3UFS2EYY2SFAUTEO7JBBUXSRAR2WRKUAIQNDE7VGEQATLMCVSMGRMVEVNS7EKGI3CQVWNVRQJACHVUUXZY2TGYVPWKTS6552PLDLQF6KIHKWCVUIWM2TD5XN62ULBO4NYLWVUWD5CM6JVPD2HLZQ6TI'}, u'application': {u'applicationId': u'amzn1.ask.skill.7b01b357-de3c-452c-8c9f-9bffec202c91'}}
+
+sample_session = {
+    'new': False,
+    'sessionId': 'amzn1.echo-api.session.21d3ade4-ff06-4cb0-bc0e-4966855237e0',
+    'attributes': {
+        'reprompt_text': 'What is the nickname for Pace University?',
+        'current_questions_index': 3,
+        'score': 0,
+        'questions': [9, 3, 16, 11, 14],
+        'correct_answers': ['Setters'],
+        'speech_output': 'That answer is wrong. The correct answer is Blue BoysYour score is 0. What is the nickname for Pace University?'
+    },
+    'user': {
+        'userId': 'amzn1.ask.account.AF6XZLNHASKGV256WJFA3OQVJO57Y5YJNJ6K2NP5QTB5ERQBYWCPONSS3UFS2EYY2SFAUTEO7JBBUXSRAR2WRKUAIQNDE7VGEQATLMCVSMGRMVEVNS7EKGI3CQVWNVRQJACHVUUXZY2TGYVPWKTS6552PLDLQF6KIHKWCVUIWM2TD5XN62ULBO4NYLWVUWD5CM6JVPD2HLZQ6TI'
+    },
+    'application': {
+        'applicationId': 'amzn1.ask.skill.7b01b357-de3c-452c-8c9f-9bffec202c91'
+    }
+}
 
 
 def test_build_response():
-    sessionAttr={'speech_output': "Let's play College Nicknames. I will ask you 5 questions. Try to get as many right as you can. Just say the answer. Let's begin. What is the nickname for Adelphi",
+    sessionAttr={
+        'speech_output': "Let's play College Nicknames. I will ask you 5 questions. Try to get as many right as you can. Just say the answer. Let's begin. What is the nickname for Adelphi",
         'reprompt_text': 'What is the nickname for Adelphi',
         'current_questions_index': 0,
         'questions': [3, 5, 1, 4, 0],
@@ -123,19 +142,6 @@ def test_get_welcome_response():
     question = (list(QUESTIONS[index].keys())[0])
     assert question in sessionAttr['speech_output']
     assert question in sessionAttr['reprompt_text']
-
-    # if question is "What is the nickname for University of Washington?":
-    #     assert "Huskies" in sessionAttr['correct_answers']
-    # if question is "What is the nickname for Abilene Christian University?": 
-    #     assert "Wildcats" in sessionAttr['correct_answers']
-    # if question is "What is the nickname for Adams State?":
-    #     assert "Grizzlies" in sessionAttr['correct_answers']
-    # if question is "What is the nickname for Adelphi":
-    #     assert "Panthers" in sessionAttr['correct_answers']
-    # if question is "What is the nickname for Adrian College?":
-    #     assert "Bulldogs" in sessionAttr['correct_answers']
-    # if question is "What is the nickname for Air Force?":
-    #     assert "Falcons" in sessionAttr['correct_answers']
  
     # Verify the answer is correct
     assert QUESTIONS[index][question] is sessionAttr['correct_answers']
@@ -154,9 +160,22 @@ def test_get_welcome_response():
     assert question in responseAttr['reprompt']['outputSpeech']['text']
     assert responseAttr['shouldEndSession'] is False
 
-def test_handle_answer_request():
-    test_intent = ""
-    test_session = ""
+
+# Different intents
+#   - AnswerIntent
+#   - AnswerOnlyIntent
+#   - AMAZON.YesIntent
+#   - AMAZON.NoIntent
+#   - AMAZON.StartOverIntent
+#   - AMAZON.RepeatIntent
+#   - AMAZON.HelpIntent
+#   - AMAZON.StopIntent
+#   - AMAZON.CancelIntent
+
+def test_handle_answer_request_answeronlyintent():
+    test_intent = sample_intent
+    test_session = sample_session
 
     answer_req = handle_answer_request (test_intent, test_session)
+    print (answer_req)
     assert false

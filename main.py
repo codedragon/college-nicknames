@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/local/bin/python
 """College Nicknames Alexa Skill
 
 This sample demonstrates a simple skill built with the Amazon Alexa Skills Kit.
@@ -6,7 +6,7 @@ The Intent Schema, Custom Slots, and Sample Utterances for this skill, as well
 as testing instructions are located at http://amzn.to/1LzFrj6
 
 For additional samples, visit the Alexa Skills Kit Getting Started guide at
-http://amzn.to/1LGWsLG
+-http://amzn.to/1LGWsLG
 """
 
 from __future__ import print_function

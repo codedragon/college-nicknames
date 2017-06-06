@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/local/bin/python
 """College Nicknames Alexa Skill
 
 This sample demonstrates a simple skill built with the Amazon Alexa Skills Kit.
