@@ -9,7 +9,9 @@ This application will ask the user to provide the nickname for state colleges in
 All customizations are done to lib.py. 
 
 Current customization:
+
 GAME_LENGTH: 5
+
 QUESTIONS: Pac 12 and Big 10 schools (All US schools are listed)
 
 # Lambda Installation
