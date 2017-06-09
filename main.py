@@ -77,6 +77,15 @@ def on_intent(intent_request, session):
             return handle_repeat_request(intent, session)
 
     # Dispatch to your skill's intent handlers
+    ### this can be done as a dictionary. Some keys will have the same value
+    ###
+    ### FUNC_MAP = {"AnswerIntent': handle_answer_request, 
+    ###             'AnswerOnlyIntent': handle_answer_request, 
+    ###             'Amazon.YesIntent': handle_answer_request, ...}
+    ### 
+    ### def f2(intent_name):
+    ###    FUNC_MAP[intent_name](intent, session)
+
     if intent_name == "AnswerIntent":
         return handle_answer_request(intent, session)
     elif intent_name == "AnswerOnlyIntent":
@@ -151,6 +160,10 @@ def populate_game_questions():
 
     # Pick GAME_LENGTH random questions from the list to ask the user,
     # make sure there are no repeats
+    
+    #### I think you could replace this with random.sample, which will pull
+    #### x elements from a population. In general, if there is something that
+    #### it seems like it might be a common thing to do, check the documentation.
     for j in range(0, GAME_LENGTH):
         rand = int(math.floor(random.random() * index))
         index -= 1
@@ -164,6 +177,10 @@ def populate_game_questions():
 
 
 def handle_answer_request(intent, session):
+    ### This function is too large. You need some tests, and then do some refactoring.
+    ### All of the return statements include the build_response. You could mock build_response
+    ### and make sure it is being called with what you intend, and that would make it easier
+    ### to refactor. Check out assert_called_with in the mock library.
     print ("intent:")
     print (intent)
     print ("session:")
